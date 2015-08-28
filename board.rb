@@ -60,7 +60,7 @@ class Board
 
   def duped_board
     deep_dup = Board.new(false)
-    deep_dup.grid.each_with_index do |row, row_index|
+    self.grid.each_with_index do |row, row_index|
       row.each_with_index do |tile, col_index|
         deep_dup[[row_index, col_index]] = tile.dup(deep_dup)
       end
@@ -69,10 +69,11 @@ class Board
   end
 
   def move(position, new_position, color)
+    debugger
     if color != self[position].color
-      raise NotYourPiece.new "That is not your piece, idiot!"
+      raise NotYourPiece.new "That piece is not yours"
     elsif !valid_move?(position, new_position, color)
-      raise InvalidMove.new "You cannot put yourself in check!"
+      raise InvalidMove.new "You cannot put yourself in check"
     elsif !self[position].possible_moves.include?(new_position)
       raise InvalidMove.new "You cannot move here"
     else
@@ -83,17 +84,17 @@ class Board
   def valid_move?(position, new_position, color)
     dup = duped_board
     dup.move_piece!(position, new_position)
-    !dup.in_check?(color)
+    !dup.in_check?(color) #// Don't check for moving into check yet!
   end
 
   def checkmate?(color)
     return false unless in_check?(color)
     current_color_pieces = find_pieces(color)
 
+    # If color has any valid moves it's not in check
     current_color_pieces.each do |piece|
       piece.possible_moves.each do |possible_move|
-        position, new_position = possible_move
-        return false if valid_move?(position, new_position, color)
+        return false if valid_move?(piece.position, possible_move, color)
       end
     end
 

@@ -20,13 +20,15 @@ class Display
     @board = board
     @game = game
     @cursor = [0,0]
+    @selected = nil
     @debug_mode = true
     @error_message = nil
     #debugger
   end
 
-  def select_square
-      move_cursor
+  def select_square(num, current_player)
+      move_cursor(current_player)
+      @selected = (num == 1) ? cursor : nil;
       cursor
   end
 
@@ -42,10 +44,11 @@ class Display
     debug_mode_print if debug_mode
   end
 
-  def move_cursor
+  def move_cursor(current_player)
     loop do
       system('clear')
       render
+      puts "Turn: #{current_player.name}(#{current_player.color})"
       input = $stdin.getch
       raise Quit if input == 'q'
       next unless valid_input?(input)
@@ -68,10 +71,12 @@ class Display
     string = " #{string}  "
     if position == cursor
       string = string.colorize(:background => :yellow)
+    elsif position == @selected
+      string = string.colorize(:background => :yellow)
     elsif alternated_color?(position)
-      string = string.colorize(:background => :red)
+      string = string.colorize(:background => :light_blue)
     else
-      string = string.colorize(:background => :blue)
+      string = string.colorize(:background => :black)
     end
 
     if debug_mode
@@ -100,7 +105,8 @@ class Display
     puts "Current Piece Possible Moves: #{board[cursor].possible_moves}"
     puts "Black in check?: #{board.in_check?(:black)}"
     puts "White in check?: #{board.in_check?(:white)}"
-    # puts "Checkmate?: #{board.checkmate?(:white) || board.checkmate?(:black)}"
+    puts "Checkmate black?: #{board.checkmate?(:black)}"
+    puts "Checkmate white?: #{board.checkmate?(:black)}"
     puts "Object Class: #{board[cursor].class}"
     puts "Current Player: #{game.current_player.name}"
   end

@@ -19,8 +19,8 @@ class Player
   end
 
   def take_turn
-    position = display.select_square
-    destination = display.select_square
+    position = display.select_square(1, self)
+    destination = display.select_square(2, self)
 
     piece = board.piece_at(position)
     board.move(position, destination, color)
