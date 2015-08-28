@@ -26,6 +26,9 @@ class Game
       rescue NotYourPiece => e
         display.error_message = e.message
         retry
+      rescue Quit => e
+        puts "You have quit"
+        break
       end
       display.error_message = nil
       switch_players

@@ -47,6 +47,7 @@ class Display
       system('clear')
       render
       input = $stdin.getch
+      raise Quit if input == 'q'
       next unless valid_input?(input)
       delta = WASD_DIFFS[input]
       break if delta == [0,0]
