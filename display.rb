@@ -50,7 +50,8 @@ class Display
       next unless valid_input?(input)
       delta = WASD_DIFFS[input]
       break if delta == [0,0]
-      self.cursor = add_coordinates(cursor, delta)
+      new_pos = add_coordinates(cursor, delta)
+      self.cursor = new_pos if self.board.in_bounds?(new_pos)
     end
   end
 
