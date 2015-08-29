@@ -13,13 +13,17 @@ class Piece
   # VECTORS = DIAG_VECTORS
 
   attr_reader :color, :board
-  attr_accessor :captured, :moved, :position, :vectors
+  attr_accessor :captured, :moved, :position, :vectors, :double_vector, :capture_vectors
 
   def initialize(position, color, board)
     @position = position
     @color = color
     @board = board
     @captured, @moved = false, false
+  end
+
+  def opponent_color
+    (self.color == :white)? :black : :white
   end
 
   def self_blocking?(move)
@@ -51,7 +55,6 @@ class Piece
 
   def possible_moves
     moves_in_range.select do |move|
-      # debugger if move.is_a?(Fixnum)
       board.in_bounds?(move) && !self_blocking?(move)
     end
   end
@@ -175,9 +178,40 @@ class Knight < SteppingPiece
 end
 
 class Pawn < SteppingPiece
+
   def initialize(position, color, board)
-    @vectors = HV_VECTORS + DIAG_VECTORS
+    @vectors = (color == :white) ? [[1,0]]: [[-1,0]]
+    @capture_vectors = (color == :white) ? [[1,-1], [1,1]] : [[-1,-1], [-1,1]]
+    @double_vector = (color == :white ) ? [2, 0] : [-2, 0]
     super(position, color, board)
+  end
+
+  def moves_in_range
+    moves = []
+    current_vectors = self.moved ? self.vectors : self.vectors + [self.double_vector]
+    current_vectors.each do |vector|
+      pos = move_from_vector(vector)
+      moves << pos unless is_capture(pos)
+    end
+    moves += capture_moves
+    moves
+  end
+
+  def move_from_vector(v)
+    [v[0]+ self.position[0], v[1] + self.position[1]]
+  end
+
+  def capture_moves
+    captures = []
+    self.capture_vectors.each do |vector|
+      pos = move_from_vector(vector)
+      captures << pos if is_capture(pos)
+    end
+    captures
+  end
+
+  def is_capture(position)
+    self.board.in_bounds?(position) && self.board.color_at(position) == self.opponent_color
   end
 
   def symbol

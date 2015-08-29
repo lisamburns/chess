@@ -8,6 +8,10 @@ class EmptySquare
     false
   end
 
+  def color
+    :blank
+  end
+
   def symbol
     " "
   end

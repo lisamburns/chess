@@ -33,6 +33,7 @@ class Game
       display.error_message = nil
       switch_players
     end
+    puts "#{current_player.name} loses"
   end
 
   def switch_players

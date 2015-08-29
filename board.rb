@@ -15,7 +15,7 @@ class Board
 
   BLACK_POSITIONS = {
     "K" => [[7, 4]],
-    "Q" => [[4, 1]],
+    "Q" => [[7, 3]],
     "B" => [[7, 2], [7, 5]],
     "N" => [[7, 1], [7, 6]],
     "R" => [[7, 0], [7, 7]],
@@ -69,7 +69,6 @@ class Board
   end
 
   def move(position, new_position, color)
-    debugger
     if color != self[position].color
       raise NotYourPiece.new "That piece is not yours"
     elsif !valid_move?(position, new_position, color)
@@ -153,6 +152,10 @@ class Board
 
   def piece_at(position)
     self[position]
+  end
+
+  def color_at(position)
+    self[position].color
   end
 
   def occupied?(position)
