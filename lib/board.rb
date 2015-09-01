@@ -72,9 +72,9 @@ class Board
     if color != self[position].color
       raise NotYourPiece.new "That piece is not yours"
     elsif !valid_move?(position, new_position, color)
-      raise InvalidMove.new "You cannot put yourself in check"
+      raise InvalidMove.new "You can't yourself in check"
     elsif !self[position].possible_moves.include?(new_position)
-      raise InvalidMove.new "You cannot move here"
+      raise InvalidMove.new "You can't move there"
     else
       move_piece!(position, new_position)
     end

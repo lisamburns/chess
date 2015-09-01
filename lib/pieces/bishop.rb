@@ -1,4 +1,5 @@
-class Bishop < SlidingPiece
+class Bishop < Piece
+  include Slideable
 
   def initialize(position, color, board)
     @vectors = DIAG_VECTORS

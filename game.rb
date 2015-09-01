@@ -9,8 +9,8 @@ class Game
   def initialize
     @board = Board.new
     @display = Display.new(board, self)
-    @player1 = Player.new("Lisa", :white, display, board)
-    @player2 = Player.new("Brad", :black, display, board)
+    @player1 = Player.new("Player 1", :white, display, board)
+    @player2 = Player.new("Player 2", :black, display, board)
     @current_player = player2
   end
 

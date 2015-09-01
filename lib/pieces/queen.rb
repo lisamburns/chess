@@ -1,4 +1,5 @@
-class Queen < SlidingPiece
+class Queen < Piece
+    include Slideable
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS + DIAG_VECTORS

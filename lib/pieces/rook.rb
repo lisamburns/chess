@@ -1,4 +1,5 @@
-class Rook < SlidingPiece
+class Rook  < Piece
+    include Slideable
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS

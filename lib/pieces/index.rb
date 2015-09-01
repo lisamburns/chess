@@ -1,4 +1,6 @@
 require_relative 'piece'
+require_relative 'slideable'
+require_relative 'steppable'
 require_relative 'empty_square'
 require_relative 'king'
 require_relative 'queen'

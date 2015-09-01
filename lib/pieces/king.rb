@@ -1,4 +1,5 @@
-class King < SteppingPiece
+class King < Piece
+  include Steppable
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS + DIAG_VECTORS

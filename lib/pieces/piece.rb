@@ -11,7 +11,7 @@ class Piece
                  [-1, -1]]
 
   attr_reader :color, :board
-  attr_accessor :captured, :moved, :position, :vectors, :double_vector, :capture_vectors, :promotion_row
+  attr_accessor :captured, :moved, :position, :vectors
 
   def initialize(position, color, board)
     @position = position
@@ -70,34 +70,6 @@ class Piece
     x, y = position
     dx, dy = vector
     [x + dx, y + dy]
-  end
-
-end
-
-class SlidingPiece < Piece
-
-  def moves_from_vector(vector)
-    vector_moves = []
-
-    i = 1
-    loop do
-      new_vector = vector.map {|x| x*i }
-      move = step(new_vector)
-      i += 1
-      break if !board.in_bounds?(move)
-      vector_moves << move
-      break if board.piece_at(move).piece?
-    end
-
-    vector_moves
-  end
-
-end
-
-class SteppingPiece < Piece
-
-  def moves_from_vector(vector)
-    [step(vector)]
   end
 
 end

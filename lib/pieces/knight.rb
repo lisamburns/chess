@@ -1,4 +1,5 @@
-class Knight < SteppingPiece
+class Knight < Piece
+  include Steppable
   L_VECTORS = [[2,1],
                [-2,1],
                [2,-1],

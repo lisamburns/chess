@@ -19,7 +19,7 @@ class Display
     @game = game
     @cursor = [0,0]
     @selected = nil
-    @debug_mode = true
+    @debug_mode = false
     @error_message = nil
   end
 
