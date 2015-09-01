@@ -52,7 +52,7 @@ class Piece
   end
 
   def possible_moves
-    moves_in_range.select do |move|
+    moves = moves_in_range.select do |move|
       board.in_bounds?(move) && !self_blocking?(move)
     end
   end

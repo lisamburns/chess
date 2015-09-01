@@ -71,8 +71,8 @@ class Board
   def move(position, new_position, color)
     if color != self[position].color
       raise NotYourPiece.new "That piece is not yours"
-    elsif !valid_move?(position, new_position, color)
-      raise InvalidMove.new "You can't yourself in check"
+    # elsif !valid_move?(position, new_position, color)
+    #   raise InvalidMove.new "You can't yourself in check"
     elsif !self[position].possible_moves.include?(new_position)
       raise InvalidMove.new "You can't move there"
     else
@@ -83,14 +83,13 @@ class Board
   def valid_move?(position, new_position, color)
     dup = duped_board
     dup.move_piece!(position, new_position)
-    !dup.in_check?(color) #// Don't check for moving into check yet!
+    !dup.in_check?(color)
   end
 
   def checkmate?(color)
     return false unless in_check?(color)
     current_color_pieces = find_pieces(color)
 
-    # If color has any valid moves it's not in check
     current_color_pieces.each do |piece|
       piece.possible_moves.each do |possible_move|
         return false if valid_move?(piece.position, possible_move, color)
