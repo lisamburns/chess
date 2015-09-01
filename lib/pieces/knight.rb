@@ -11,11 +11,8 @@ class Knight < Piece
 
    def initialize(position, color, board)
      @vectors = L_VECTORS
+     @symbol = "\u265E"
      super(position, color, board)
    end
-
-   def symbol
-    color == :black ? "\u265E" : "\u2658"
-  end
 
 end

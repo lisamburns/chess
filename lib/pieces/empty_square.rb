@@ -12,7 +12,7 @@ class EmptySquare
     :blank
   end
 
-  def symbol
+  def colored_symbol
     " "
   end
 

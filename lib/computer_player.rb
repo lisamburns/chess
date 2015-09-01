@@ -30,6 +30,8 @@ class ComputerPlayer
         best_move_score = move_score(move)
       end
     end
+    puts best_move_score
+    p best_move
     best_move
   end
 
@@ -40,7 +42,8 @@ class ComputerPlayer
     dup.move_piece!(position, new_position)
     return 1000 if dup.checkmate?(other_player)
     return 500 if dup.in_check?(other_player)
-    return 100 # Any other move
+    return 100 if self.board.piece_at(position).is_capture(new_position)
+    return 50
   end
 
   def all_moves

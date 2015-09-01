@@ -53,7 +53,7 @@ class Board
   def render
     lines = []
     grid.each do |row|
-      lines << row.map {|square| square.symbol }
+      lines << row.map {|square| square.colored_symbol }
     end
     lines
   end

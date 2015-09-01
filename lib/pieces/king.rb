@@ -3,11 +3,8 @@ class King < Piece
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS + DIAG_VECTORS
+    @symbol = "\u265A"
     super(position, color, board)
-  end
-
-  def symbol
-    color == :black ? "\u265B" : "\u2655"
   end
 
 end

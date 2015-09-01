@@ -3,11 +3,8 @@ class Rook  < Piece
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS
+    @symbol = "\u265C"
     super(position, color, board)
-  end
-
-  def symbol
-    color == :black ? "\u265C" : "\u2656"
   end
 
 end

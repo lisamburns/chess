@@ -14,15 +14,12 @@ class Pawn < Piece
       @capture_vectors = [[-1,-1], [-1,1]]
       @promotion_row = 0
     end
+    @symbol = "\u265F"
     super(position, color, board)
   end
 
   def is_promoted?
     self.position[0] == self.promotion_row
-  end
-
-  def is_capture(position)
-    self.board.in_bounds?(position) && self.board.color_at(position) == self.opponent_color
   end
 
   #Returns vectors of currently allowed moves, taking into account if pawn has moved.
@@ -47,10 +44,6 @@ class Pawn < Piece
       captures << pos if is_capture(pos)
     end
     captures
-  end
-
-  def symbol
-    color == :black ? "\u265F" : "\u2659"
   end
 
 end

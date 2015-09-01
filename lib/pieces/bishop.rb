@@ -3,10 +3,8 @@ class Bishop < Piece
 
   def initialize(position, color, board)
     @vectors = DIAG_VECTORS
+    @symbol = "\u265D"
     super(position, color, board)
-  end
-  def symbol
-    color == :black ? "\u265D" : "\u2657"
   end
 
 end

@@ -71,9 +71,9 @@ class Display
     elsif position == @selected
       string = string.colorize(:background => :yellow)
     elsif alternated_color?(position)
-      string = string.colorize(:background => :light_blue)
+      string = string.colorize( :background => :light_blue)
     else
-      string = string.colorize(:background => :black)
+      string = string.colorize( :background => :magenta)
     end
 
     if debug_mode
