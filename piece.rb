@@ -13,7 +13,7 @@ class Piece
   # VECTORS = DIAG_VECTORS
 
   attr_reader :color, :board
-  attr_accessor :captured, :moved, :position, :vectors, :double_vector, :capture_vectors
+  attr_accessor :captured, :moved, :position, :vectors, :double_vector, :capture_vectors, :promotion_row
 
   def initialize(position, color, board)
     @position = position
@@ -79,7 +79,6 @@ end
 class SlidingPiece < Piece
 
   def moves_from_vector(vector)
-  #   debugger if self.is_a?(Queen) && self.color == :black && vector == [0,1]
     vector_moves = []
 
     i = 1
@@ -183,7 +182,12 @@ class Pawn < SteppingPiece
     @vectors = (color == :white) ? [[1,0]]: [[-1,0]]
     @capture_vectors = (color == :white) ? [[1,-1], [1,1]] : [[-1,-1], [-1,1]]
     @double_vector = (color == :white ) ? [2, 0] : [-2, 0]
+    @promotion_row = (position[0] == 0) ? 7 : 0
     super(position, color, board)
+  end
+
+  def is_promoted?
+    self.position[0] == self.promotion_row
   end
 
   def moves_in_range

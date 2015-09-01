@@ -4,14 +4,19 @@ require_relative 'error.rb'
 require 'byebug'
 
 class Board
+
   WHITE_POSITIONS = {
-    "K" => [[0, 4]],
-    "Q" => [[0, 3]],
-    "B" => [[0, 2], [0, 5]],
-    "N" => [[0, 1], [0, 6]],
-    "R" => [[0, 0], [0, 7]],
-    "P" => [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]
+    "K" => [[0, 4]]
   }
+
+  # WHITE_POSITIONS = {
+  #   "K" => [[0, 4]],
+  #   "Q" => [[0, 3]],
+  #   "B" => [[0, 2], [0, 5]],
+  #   "N" => [[0, 1], [0, 6]],
+  #   "R" => [[0, 0], [0, 7]],
+  #   "P" => [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]
+  # }
 
   BLACK_POSITIONS = {
     "K" => [[7, 4]],
@@ -167,6 +172,15 @@ class Board
     self[new_position] = current_piece
     self[position] = EmptySquare.new
     current_piece.update_position(new_position)
+    check_pawn_promotion(current_piece)
+  end
+
+  def check_pawn_promotion(current_piece)
+    if current_piece.instance_of?(Pawn) && current_piece.is_promoted?
+      queen = Queen.new(current_piece.position, current_piece.color, self)
+      self[current_piece.position] = queen
+      puts "Pawn promoted to queen"
+    end
   end
 
 end
