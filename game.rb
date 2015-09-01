@@ -1,6 +1,6 @@
-require_relative 'board'
-require_relative 'display'
-require_relative 'player'
+require_relative 'lib/board'
+require_relative 'lib/display'
+require_relative 'lib/player'
 
 class Game
   attr_accessor :current_player
@@ -42,5 +42,7 @@ class Game
 
 end
 
-game = Game.new
-game.play
+if __FILE__ == $PROGRAM_NAME
+  game = Game.new
+  game.play
+end

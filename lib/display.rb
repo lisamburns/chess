@@ -1,7 +1,5 @@
 require 'io/console'
 require 'colorize'
-require_relative 'board.rb'
-require_relative 'empty_square.rb'
 require 'byebug'
 
 class Display
@@ -23,7 +21,6 @@ class Display
     @selected = nil
     @debug_mode = true
     @error_message = nil
-    #debugger
   end
 
   def select_square(num, current_player)
@@ -80,7 +77,6 @@ class Display
     end
 
     if debug_mode
-      # piece = board.piece_at(position)
       string = string.colorize(:background => :green) if board[cursor].possible_moves.include?(position)
     end
     print string
@@ -110,11 +106,4 @@ class Display
     puts "Object Class: #{board[cursor].class}"
     puts "Current Player: #{game.current_player.name}"
   end
-end
-
-
-if __FILE__ == $PROGRAM_NAME
-  board = Board.new
-  display = Display.new(board)
-  display.get_move
 end

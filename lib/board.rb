@@ -1,22 +1,17 @@
-require_relative 'empty_square.rb'
-require_relative 'piece.rb'
+require_relative 'pieces/index'
 require_relative 'error.rb'
 require 'byebug'
 
 class Board
 
   WHITE_POSITIONS = {
-    "K" => [[0, 4]]
+    "K" => [[0, 4]],
+    "Q" => [[0, 3]],
+    "B" => [[0, 2], [0, 5]],
+    "N" => [[0, 1], [0, 6]],
+    "R" => [[0, 0], [0, 7]],
+    "P" => [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]
   }
-
-  # WHITE_POSITIONS = {
-  #   "K" => [[0, 4]],
-  #   "Q" => [[0, 3]],
-  #   "B" => [[0, 2], [0, 5]],
-  #   "N" => [[0, 1], [0, 6]],
-  #   "R" => [[0, 0], [0, 7]],
-  #   "P" => [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]
-  # }
 
   BLACK_POSITIONS = {
     "K" => [[7, 4]],

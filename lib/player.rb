@@ -1,7 +1,3 @@
-require_relative 'board'
-require_relative 'piece'
-require_relative 'display'
-
 class Player
 
   attr_accessor :display, :e
@@ -25,11 +21,4 @@ class Player
     piece = board.piece_at(position)
     board.move(position, destination, color)
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-    board = Board.new
-    display = Display.new(board)
-    player = Player.new("Lisa", :white, display, board)
-    player.take_turn
 end
