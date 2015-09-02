@@ -15,6 +15,7 @@ class Pawn < Piece
       @promotion_row = 0
     end
     @symbol = "\u265F"
+    @value = 1
     super(position, color, board)
   end
 

@@ -71,8 +71,8 @@ class Board
   def move(position, new_position, color)
     if color != self[position].color
       raise NotYourPiece.new "That piece is not yours"
-    # elsif !valid_move?(position, new_position, color)
-    #   raise InvalidMove.new "You can't yourself in check"
+    elsif !valid_move?(position, new_position, color)
+      raise InvalidMove.new "You can't yourself in check"
     elsif !self[position].possible_moves.include?(new_position)
       raise InvalidMove.new "You can't move there"
     else
@@ -173,8 +173,42 @@ class Board
     if current_piece.instance_of?(Pawn) && current_piece.is_promoted?
       queen = Queen.new(current_piece.position, current_piece.color, self)
       self[current_piece.position] = queen
-      puts "Pawn promoted to queen"
     end
+  end
+
+  def all_moves(color)
+    moves = []
+
+    find_pieces(color).each do |piece|
+      piece.possible_moves.each do |move|
+        moves << [ piece.position, move ] if valid_move?(piece.position, move, color)
+      end
+    end
+    moves.shuffle
+  end
+
+  def max_capture_value(color)
+    max = 0
+    all_moves(color).each do |move|
+      from, to = move
+      piece = self.piece_at(to)
+      if !piece.empty? && self.color_at(to) != color && piece.value > max
+        max = piece.value
+      end
+    end
+    max
+  end
+
+  def scores
+    results = {}
+    [:white, :black].each do |color|
+      # debugger
+      values = self.find_pieces(color)
+          .reject {|piece| piece.value.nil? }
+          .map {|piece| piece.value }
+      results[color] = values.inject(:+)
+    end
+    results
   end
 
 end

@@ -10,15 +10,14 @@ class Game
   def initialize
     @board = Board.new
     @display = Display.new(board, self)
-    @player1 = Player.new("Player 1", :white, display, board)
-    @player2 = ComputerPlayer.new("Player 2", :black, display, board)
+    @player1 = ComputerPlayer.new("ChessMachine2000", :black, display, board)
+    @player2 = Player.new("Player 1", :white, display, board)
     @current_player = player2
   end
 
   def play
+    display.render
     until board.checkmate?(current_player.color)
-      display.render
-      puts "#{current_player.name}'s turn.'"
       begin
         current_player.take_turn
       rescue InvalidMove => e
@@ -34,6 +33,7 @@ class Game
       display.error_message = nil
       switch_players
     end
+    display.render
     puts "#{current_player.name} loses"
   end
 

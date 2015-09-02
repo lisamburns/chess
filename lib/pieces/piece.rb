@@ -11,7 +11,7 @@ class Piece
                  [1, -1],
                  [-1, -1]]
 
-  attr_reader :color, :board, :symbol, :vectors
+  attr_reader :color, :board, :symbol, :vectors, :value
   attr_accessor :captured, :moved, :position
 
   def initialize(position, color, board)

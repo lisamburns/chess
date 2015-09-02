@@ -15,6 +15,9 @@ class ComputerPlayer
   end
 
   def take_turn
+    system('clear')
+    self.display.render
+    sleep(1) # Pause so human player can see the result of their move first.
     position, destination = choose_move
 
     piece = board.piece_at(position)
@@ -22,16 +25,14 @@ class ComputerPlayer
   end
 
   def choose_move
-    best_move_score = 0
+    best_move_score = -500
     best_move = []
-    all_moves.each do |move|
+    self.board.all_moves(self.color).each do |move|
       if move_score(move) > best_move_score
         best_move = move
         best_move_score = move_score(move)
       end
     end
-    puts best_move_score
-    p best_move
     best_move
   end
 
@@ -41,20 +42,8 @@ class ComputerPlayer
     dup = self.board.duped_board
     dup.move_piece!(position, new_position)
     return 1000 if dup.checkmate?(other_player)
-    return 500 if dup.in_check?(other_player)
-    return 100 if self.board.piece_at(position).is_capture(new_position)
-    return 50
+    return dup.scores[self.color] - dup.scores[other_player] - dup.max_capture_value(other_player)
   end
 
-  def all_moves
-    moves = []
-
-    self.board.find_pieces(self.color).each do |piece|
-      piece.possible_moves.each do |move|
-        moves << [ piece.position, move ] if self.board.valid_move?(piece.position, move, self.color)# Later exclude moving into check!
-      end
-    end
-    moves.shuffle
-  end
 
 end

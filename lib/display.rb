@@ -30,7 +30,6 @@ class Display
   end
 
   def render
-    puts error_message if error_message
     chars_to_render = board.render
     chars_to_render.each_with_index do |row, row_index|
       row.each_with_index do |string, col_index|
@@ -38,14 +37,13 @@ class Display
       end
       puts ""
     end
-    debug_mode_print if debug_mode
+    debug_mode ? print_debug_mode : print_info
   end
 
   def move_cursor(current_player)
     loop do
       system('clear')
       render
-      puts "Turn: #{current_player.name}(#{current_player.color})"
       input = $stdin.getch
       raise Quit if input == 'q'
       next unless valid_input?(input)
@@ -96,7 +94,13 @@ class Display
     alternate
   end
 
-  def debug_mode_print
+  def print_info
+    puts error_message if error_message
+    puts "Current Player: #{self.game.current_player.name} (#{self.game.current_player.color})"
+    puts "Check" if self.board.in_check?(:white) || self.board.in_check?(:black)
+  end
+
+  def print_debug_mode
     puts "Cursor: #{cursor.inspect}"
     puts "Current Piece Possible Moves: #{board[cursor].possible_moves}"
     puts "Black in check?: #{board.in_check?(:black)}"
